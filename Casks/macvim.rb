@@ -24,6 +24,12 @@ cask :v1 => 'macvim' do
   app "MacVim-snapshot-#{version.sub(%r{^.*-},'')}/MacVim.app"
   binary "MacVim-snapshot-#{version.sub(%r{^.*-},'')}/mvim"
 
+  if ARGV.include? "--override-system-vim"
+    %w{gvim gvimdiff gview gvimex vi vim vimdiff view vimex}.each do |t|
+      binary "MacVim-snapshot-#{version.sub(%r{^.*-},'')}/mvim", :target => t
+    end
+  end
+
   zap :delete => [
                   '~/Library/Preferences/org.vim.MacVim.LSSharedFileList.plist',
                   '~/Library/Preferences/org.vim.MacVim.plist',
